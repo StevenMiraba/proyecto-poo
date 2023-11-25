@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Usuario;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 //import Servicio.*;
 /**
@@ -15,8 +18,28 @@ public class Cliente extends Usuario{
        super(nombre,apellido,user,contraseña,numCedula,numCelular,tipoUsuario,edad);
        this.numTarjCredito=numTarjCredito;
     }
-    public void registrarCliente(int edad, String numTarjCredito){
-        
+    public void registrarCliente(String nombreArchivo, String numcedula, int edad, String numTarjCredit){
+        FileWriter fichero = null;
+        BufferedWriter bw = null;
+
+        try {
+            fichero = new FileWriter(nombreArchivo, true);
+            bw = new BufferedWriter(fichero);
+            String linea = "\"" + numcedula + "\"," + edad + ",\"" + numTarjCredit + "\"";
+            bw.write(linea + "\n");
+            System.out.println("Cliente agregado al archivo.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
     public void presentarMenu(){
         System.out.println("/***************MENU***************/");
